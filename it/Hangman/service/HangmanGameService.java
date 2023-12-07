@@ -3,6 +3,7 @@ package fasttrack.it.Hangman.service;
 import fasttrack.it.Hangman.config.HangmanConfig;
 import fasttrack.it.Hangman.exception.ResourceNotFoundException;
 import fasttrack.it.Hangman.model.Category;
+import fasttrack.it.Hangman.model.WordUpdate;
 import fasttrack.it.Hangman.model.WordsEntry;
 import fasttrack.it.Hangman.reader.WordsReader;
 import fasttrack.it.Hangman.repository.WordsRepository;
@@ -25,10 +26,10 @@ import java.util.stream.Collectors;
 public class HangmanGameService {
     private final WordsRepository repository;
     private final WordsReader reader;
+    private final HangmanConfig config;
     public static int MAX_ATTEMPTS;
 
     public static String INPUT_FILE;
-    private final HangmanConfig config;
 
     private String wordToGuess;
     private Set<Character> guessedLetters;
@@ -107,7 +108,6 @@ public class HangmanGameService {
         }
     }
 
-    // Other getters and setters...
 
     public int getIncorrectAttempts() {
         return incorrectAttempts;
@@ -127,6 +127,15 @@ public class HangmanGameService {
 
     public WordsEntry add(WordsEntry newWord) {
         return repository.save(newWord);
+    }
+
+    public WordsEntry update(int id, WordUpdate wordUpdate) {
+        WordsEntry words = getOrThrow(id);
+        WordsEntry updatedWord = words
+                .withWord(wordUpdate.word() == null ? words.getWord() : wordUpdate.word())
+                .withCategory(wordUpdate.category() == null ? words.getCategory() : Category.of(wordUpdate.category()));
+
+        return repository.save(updatedWord);
     }
 
     public Optional<WordsEntry> delete(int id) {

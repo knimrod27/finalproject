@@ -2,6 +2,7 @@ package fasttrack.it.Hangman.controller;
 
 import fasttrack.it.Hangman.exception.ResourceNotFoundException;
 import fasttrack.it.Hangman.model.Category;
+import fasttrack.it.Hangman.model.WordUpdate;
 import fasttrack.it.Hangman.model.WordsEntry;
 import fasttrack.it.Hangman.service.HangmanGameService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("hangman")
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:4200")
 public class HangmanGameController {
 
     @Autowired
@@ -38,18 +40,6 @@ public class HangmanGameController {
         return result;
     }
 
-    /*@GetMapping("/status")
-    public String gameStatus() {
-        if (hangmanService.isGameOver()) {
-            return "Game over. " + getGameResult();
-        }
-
-        return "Word: " + hangmanService.displayWord() +
-                "\nAttempts left: " + (HangmanGameService.MAX_ATTEMPTS - hangmanService.getIncorrectAttempts());
-    } */
-
-
-
     private String getGameResult() {
         if (hangmanService.isGameWon()) {
             return "Congratulations! You guessed the word: " + hangmanService.getWordToGuess();
@@ -70,14 +60,14 @@ public class HangmanGameController {
     }
 
     @PostMapping
-    WordsEntry addWord(@RequestBody WordsEntry word, Category category) {
+    WordsEntry addWord(@RequestBody WordsEntry word) {
         return hangmanService.add(word);
     }
 
-    //@PatchMapping("{id}")
-    //WordsEntry updateWord(@PathVariable int id, @RequestBody WordsEntry word) {
-    //    return hangmanService.update(id, word);
-    //}
+    @PatchMapping("{id}")
+    WordsEntry updateWord(@PathVariable int id, @RequestBody WordUpdate word) {
+        return hangmanService.update(id, word);
+    }
 
     @PutMapping("{id}")
     WordsEntry replaceWord(@PathVariable int id, @RequestBody WordsEntry word) {
