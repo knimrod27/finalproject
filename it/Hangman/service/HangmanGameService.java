@@ -9,6 +9,7 @@ import fasttrack.it.Hangman.reader.WordsReader;
 import fasttrack.it.Hangman.repository.WordsRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -35,7 +36,6 @@ public class HangmanGameService {
     private Set<Character> guessedLetters;
     private int incorrectAttempts;
 
-
     @PostConstruct
    void init()  {
         MAX_ATTEMPTS = 6;
@@ -52,6 +52,7 @@ public class HangmanGameService {
 
     public String displayWord() {
         StringBuilder display = new StringBuilder();
+
         for (char letter : wordToGuess.toCharArray()) {
             if (guessedLetters.contains(letter)) {
                 display.append(letter).append(" ");
@@ -74,7 +75,7 @@ public class HangmanGameService {
             return "Incorrect guess. Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
         }
 
-        return "Correct guess!";
+        return "Correct guess! Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
     }
 
     public boolean isGameOver() {

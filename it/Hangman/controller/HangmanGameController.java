@@ -6,10 +6,13 @@ import fasttrack.it.Hangman.model.WordUpdate;
 import fasttrack.it.Hangman.model.WordsEntry;
 import fasttrack.it.Hangman.service.HangmanGameService;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("hangman")
@@ -20,11 +23,12 @@ public class HangmanGameController {
     @Autowired
     private final HangmanGameService hangmanService;
 
-    @GetMapping("/category/{category}")
-    public String startGame(@PathVariable String category) {
-        hangmanService.startGame(category);
-        return "Game started. Guess the word: " + hangmanService.displayWord();
+    @GetMapping("category/{category}")
+    public String chooseCategory(@PathVariable String category) {
+      hangmanService.startGame(category);
+      return "Game started. Guess the word: " + hangmanService.displayWord();
     }
+
 
     @GetMapping("/guess/{letter}")
     public String guessLetter(@PathVariable char letter) {
@@ -35,7 +39,7 @@ public class HangmanGameController {
         String result = hangmanService.makeGuess(letter);
         result += " Word: " + hangmanService.displayWord();
         if (hangmanService.isGameOver()) {
-            result += "\n" + "Word: " + hangmanService.displayWord() + " "+ getGameResult();
+            result += "\n" + getGameResult();
         }
         return result;
     }
@@ -75,7 +79,7 @@ public class HangmanGameController {
     }
 
     @DeleteMapping("{id}")
-    WordsEntry deleteCountry(@PathVariable int id) {
+    WordsEntry deleteWord(@PathVariable int id) {
         return hangmanService.delete(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find word with id %s".formatted(id), id));
     }

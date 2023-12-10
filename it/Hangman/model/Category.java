@@ -8,6 +8,7 @@ public enum Category {
     FRUITS,
     COUNTRIES;
 
+
     public static Category of(String value) {
          return Arrays.stream(Category.values())
                 .filter(category -> category.name().equalsIgnoreCase(value))
