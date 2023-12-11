@@ -25,8 +25,8 @@ public class HangmanGameController {
 
     @GetMapping("category/{category}")
     public String chooseCategory(@PathVariable String category) {
-      hangmanService.startGame(category);
-      return "Game started. Guess the word: " + hangmanService.displayWord();
+        hangmanService.startGame(category);
+        return "Game started. Guess the word: " + hangmanService.displayWord();
     }
 
 
@@ -48,7 +48,7 @@ public class HangmanGameController {
         if (hangmanService.isGameWon()) {
             return "Congratulations! You guessed the word: " + hangmanService.getWordToGuess();
         } else {
-            return "Sorry, you ran out of attempts. The word was: " + hangmanService.getWordToGuess();
+            return "The word was: " + hangmanService.getWordToGuess();
         }
     }
 
