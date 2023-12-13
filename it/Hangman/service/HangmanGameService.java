@@ -63,6 +63,7 @@ public class HangmanGameService {
         return display.toString().trim();
     }
 
+
     public String makeGuess(char guess) {
         if (guessedLetters.contains(guess)) {
             return "You already guessed that letter. Try again.";
@@ -72,10 +73,15 @@ public class HangmanGameService {
 
         if (wordToGuess.indexOf(guess) == -1) {
             incorrectAttempts++;
-            return "Incorrect guess. Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
-        }
 
-        return "Correct guess! Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
+            if (incorrectAttempts < MAX_ATTEMPTS) {
+                return "Incorrect guess. Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
+            } else {
+                return "Incorrect guess. No attempts left. Game over!";
+            }
+        } else {
+            return "Correct guess! Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
+        }
     }
 
     public boolean isGameOver() {

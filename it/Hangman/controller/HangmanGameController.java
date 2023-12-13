@@ -1,18 +1,18 @@
 package fasttrack.it.Hangman.controller;
 
 import fasttrack.it.Hangman.exception.ResourceNotFoundException;
-import fasttrack.it.Hangman.model.Category;
+
 import fasttrack.it.Hangman.model.WordUpdate;
 import fasttrack.it.Hangman.model.WordsEntry;
 import fasttrack.it.Hangman.service.HangmanGameService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.json.JSONParser;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("hangman")
@@ -48,7 +48,7 @@ public class HangmanGameController {
         if (hangmanService.isGameWon()) {
             return "Congratulations! You guessed the word: " + hangmanService.getWordToGuess();
         } else {
-            return "The word was: " + hangmanService.getWordToGuess();
+            return "The word was: " + hangmanService.getWordToGuess() +  ".\n Click on Restart Game to play again.";
         }
     }
 
