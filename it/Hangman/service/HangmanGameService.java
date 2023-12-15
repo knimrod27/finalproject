@@ -75,12 +75,12 @@ public class HangmanGameService {
             incorrectAttempts++;
 
             if (incorrectAttempts < MAX_ATTEMPTS) {
-                return "Incorrect guess. Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
+                return "Incorrect guess. Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts) + ".";
             } else {
                 return "Incorrect guess. No attempts left. Game over!";
             }
         } else {
-            return "Correct guess! Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts);
+            return "Correct guess! Attempts left: " + (MAX_ATTEMPTS - incorrectAttempts) + ".";
         }
     }
 

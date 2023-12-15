@@ -23,7 +23,7 @@ public class HangmanGameController {
     @Autowired
     private final HangmanGameService hangmanService;
 
-    @GetMapping("category/{category}")
+    @GetMapping("play/{category}")
     public String chooseCategory(@PathVariable String category) {
         hangmanService.startGame(category);
         return "Game started. Guess the word: " + hangmanService.displayWord();
@@ -32,12 +32,13 @@ public class HangmanGameController {
 
     @GetMapping("/guess/{letter}")
     public String guessLetter(@PathVariable char letter) {
+
         if (hangmanService.isGameOver()) {
             return "Game over. Start a new game.";
         }
 
         String result = hangmanService.makeGuess(letter);
-        result += " Word: " + hangmanService.displayWord();
+        result += " Your guess: " + hangmanService.displayWord();
         if (hangmanService.isGameOver()) {
             result += "\n" + getGameResult();
         }
