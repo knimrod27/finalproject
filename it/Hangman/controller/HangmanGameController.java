@@ -32,7 +32,6 @@ public class HangmanGameController {
 
     @GetMapping("/guess/{letter}")
     public String guessLetter(@PathVariable char letter) {
-
         if (hangmanService.isGameOver()) {
             return "Game over. Start a new game.";
         }
